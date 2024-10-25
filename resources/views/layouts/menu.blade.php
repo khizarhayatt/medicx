@@ -1,3 +1,4 @@
+menu.blade.php
 @php $styleCss = 'style' @endphp
 <div class="no-record text-center d-none">{{ __('messages.no_matching_records_found') }}</div>
 
@@ -30,12 +31,12 @@
 
 
 @can('manage_staff')
-    <li class="nav-item {{ Request::is('admin/staffs*') ? 'active' : '' }}">
+    {{-- <li class="nav-item {{ Request::is('admin/staffs*') ? 'active' : '' }}">
         <a class="nav-link d-flex align-items-center py-4" aria-current="page" href="{{ route('staffs.index') }}">
             <span class="aside-menu-icon pe-3"><i class="fas fa-users"></i></span>
             <span class="aside-menu-title">{{ __('messages.staffs') }}</span>
         </a>
-    </li>
+    </li> --}}
 @endcan
 
 @role('doctor')
@@ -148,29 +149,31 @@
         class="nav-item {{ Request::is('admin/doctors*', 'doctors/doctor-sessions*', 'admin/doctor-sessions*', 'admin/holiday*') ? 'active' : '' }}">
         <a class="nav-link d-flex align-items-center py-4" aria-current="page" href="{{ route('doctors.index') }}">
             <span class="aside-menu-icon pe-3"><i class="fa-solid fa-user-doctor"></i></span>
-            <span class="aside-menu-title">{{ __('messages.doctors') }}</span>
+            <span class="aside-menu-title">
+                {{-- {{ __('messages.doctors') }}  --}}
+                Clinics</span>
             <span class="d-none">{{ __('messages.doctors') }}</span>
             <span class="d-none">{{ __('messages.doctor_sessions') }}</span>
         </a>
     </li>
 @endcan
 @can('manage_patients')
-    <li class="nav-item {{ Request::is('admin/patients*') ? 'active' : '' }}">
+    {{-- <li class="nav-item {{ Request::is('admin/patients*') ? 'active' : '' }}">
         <a class="nav-link d-flex align-items-center py-4" aria-current="page" href="{{ route('patients.index') }}">
             <span class="aside-menu-icon pe-3"><i class="fas fa-hospital-user"></i></span>
             <span class="aside-menu-title">{{ __('messages.patients') }}</span>
         </a>
-    </li>
+    </li> --}}
 @endcan
 @if (isRole('doctor'))
-    <li
+    {{-- <li
         class="nav-item {{ Request::is('doctors/smart-patient-cards*', 'doctors/generate-patient-smart-cards*') ? 'active' : '' }}">
         <a class="nav-link d-flex align-items-center py-4" aria-current="page"
             href="{{ route('doctors.smart-patient-cards.index') }}">
             <span class="aside-menu-icon pe-3"><i class="fa-solid fa-id-card"></i></span>
             <span class="aside-menu-title">{{ __('messages.smart_patient_card.smart_patient_cards') }}</span>
         </a>
-    </li>
+    </li> --}}
 @endif
 {{-- @if (isRole('patient'))
 <li class="nav-item {{ Request::is('patients/smart-patient-cards*', 'patients/generate-patient-smart-cards*') ? 'active' : '' }}">
@@ -181,14 +184,14 @@
 </li>
 @endif --}}
 @if (isRole('clinic_admin'))
-    <li
+    {{-- <li
         class="nav-item {{ Request::is('admin/smart-patient-cards*', 'admin/generate-patient-smart-cards*') ? 'active' : '' }}">
         <a class="nav-link d-flex align-items-center py-4" aria-current="page"
             href="{{ route('smart-patient-cards.index') }}">
             <span class="aside-menu-icon pe-3"><i class="fa-solid fa-id-card"></i></span>
             <span class="aside-menu-title">{{ __('messages.smart_patient_card.smart_patient_cards') }}</span>
         </a>
-    </li>
+    </li> --}}
 @endif
 @if (!isRole('doctor') && !isRole('patient'))
     @can('manage_appointments')
@@ -203,7 +206,7 @@
     @endcan
 @endif
 @can('manage_medicines')
-    <li
+    {{-- <li
         class="nav-item {{ Request::is('admin/categories*', 'admin/brands*', 'admin/medicines*', 'admin/medicine-purchase*', 'admin/used-medicine*', 'admin/medicine-bills*') ? 'active' : '' }}">
         <a class="nav-link d-flex align-items-center py-4" aria-current="page" href="{{ route('categories.index') }}">
             <span class="aside-menu-icon me-3"><i class="fas fa-capsules"></i></span>
@@ -215,7 +218,7 @@
             <span class="d-none">{{ __('messages.used_medicine.used_medicines') }}</span>
             <span class="d-none">{{ __('messages.medicine_bills.medicine_bills') }}</span>
         </a>
-    </li>
+    </li> --}}
 @endcan
 @if (!isRole('doctor') && !isRole('patient'))
     @can('manage_transactions')
@@ -229,12 +232,12 @@
 @endif
 @if (!isRole('doctor') && !isRole('patient'))
     @can('manage_patient_visits')
-        <li class="nav-item {{ Request::is('admin/visits*') ? 'active' : '' }}">
+        {{-- <li class="nav-item {{ Request::is('admin/visits*') ? 'active' : '' }}">
             <a class="nav-link d-flex align-items-center py-4" aria-current="page" href="{{ route('visits.index') }}">
                 <span class="aside-menu-icon pe-3"><i class="fas fa-procedures"></i></span>
                 <span class="aside-menu-title">{{ __('messages.visits') }}</span>
             </a>
-        </li>
+        </li> --}}
     @endcan
 @endif
 @can('manage_services')
@@ -257,7 +260,7 @@
     </li>
 @endcan
 @can('manage_front_cms')
-    <li class="nav-item {{ Request::is('admin/enquiries*') ? 'active' : '' }}">
+    {{-- <li class="nav-item {{ Request::is('admin/enquiries*') ? 'active' : '' }}">
         <a class="nav-link d-flex align-items-center py-4" aria-current="page" href="{{ route('enquiries.index') }}">
             <span class="aside-menu-icon pe-3"><i class="fas fa-question-circle"></i></span>
             <span class="aside-menu-title">{{ __('messages.enquiries') }}</span>
@@ -279,7 +282,7 @@
             <span class="d-none">{{ __('messages.faqs') }}</span>
             <span class="d-none">{{ __('messages.front_patient_testimonials') }}</span>
         </a>
-    </li>
+    </li> --}}
 @endcan
 @can('manage_settings')
     <li

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Repositories;
-
+use Illuminate\Support\Facades\Log;
 use App\DataTable\UserDataTable;
 use App\Models\Appointment;
 use App\Models\Country;
@@ -27,8 +27,7 @@ use App\Models\Setting;
 class UserRepository extends BaseRepository
 {
     public $fieldSearchable = [
-        'first_name',
-        'last_name',
+        'first_name', 
         'email',
         'contact',
         'dob',
@@ -36,8 +35,8 @@ class UserRepository extends BaseRepository
         'experience',
         'gender',
         'status',
-        'password',
-
+        // 'password',
+         
     ];
 
     /**
@@ -70,15 +69,16 @@ class UserRepository extends BaseRepository
      */
     public function store(array $input)
     {
+        Log::info('Store Method Input:', ['input' => $input]);
         $addressInputArray = Arr::only($input,
             ['address1', 'address2', 'country_id', 'city_id', 'state_id', 'postal_code']);
-        $doctorArray = Arr::only($input, ['experience', 'twitter_url', 'linkedin_url', 'instagram_url']);
+        $doctorArray = Arr::only($input, ['experience', 'twitter_url', 'linkedin_url', 'instagram_url', 'longitude','latitude' ]);
         $specialization = $input['specializations'];
         try {
             DB::beginTransaction();
             $input['email'] = setEmailLowerCase($input['email']);
             $input['status'] = (isset($input['status'])) ? 1 : 0;
-            $input['password'] = Hash::make($input['password']);
+            $input['password'] = Hash::make('1234');
             $input['type'] = User::DOCTOR;
             $input['language'] = Setting::where('key','language')->get()->toArray()[0]['value'];
             $doctor = User::create($input);
@@ -89,12 +89,13 @@ class UserRepository extends BaseRepository
             if (isset($input['profile']) && ! empty('profile')) {
                 $doctor->addMedia($input['profile'])->toMediaCollection(User::PROFILE, config('app.media_disc'));
             }
-            $doctor->sendEmailVerificationNotification();
+            // $doctor->sendEmailVerificationNotification();
 
             DB::commit();
 
             return $doctor;
         } catch (\Exception $e) {
+            Log::error('Error storing doctor: ' . $e->getMessage());
             throw new UnprocessableEntityHttpException($e->getMessage());
         }
     }
@@ -103,7 +104,7 @@ class UserRepository extends BaseRepository
     {
         $addressInputArray = Arr::only($input,
             ['address1', 'address2', 'city_id', 'state_id', 'country_id', 'postal_code']);
-        $doctorArray = Arr::only($input, ['experience', 'twitter_url', 'linkedin_url', 'instagram_url']);
+        $doctorArray = Arr::only($input, ['experience', 'twitter_url', 'linkedin_url', 'instagram_url', 'longitude','latitude']);
         $qualificationArray = json_decode($input['qualifications'], true);
         $specialization = $input['specializations'];
         try {

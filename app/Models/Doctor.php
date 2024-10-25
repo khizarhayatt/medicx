@@ -61,6 +61,8 @@ class Doctor extends Model
         'twitter_url',
         'linkedin_url',
         'instagram_url',
+        'longitude',
+        'latitude',
     ];
 
     protected $casts = [
@@ -68,6 +70,8 @@ class Doctor extends Model
         'twitter_url' => 'string',
         'linkedin_url' => 'string',
         'instagram_url' => 'string',
+        'longitude',
+        'latitude',
     ];
 
     const O_POSITIVE = 1;

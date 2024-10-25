@@ -533,9 +533,9 @@ return [
     'doctor' => [
         'add' => 'Add Clinic',
         'edit' => 'Edit Clinic',
-        'first_name' => 'First Name',
+        'first_name' => 'CLinic Name',
         'last_name' => 'Last Name',
-        'dob' => 'DOB',
+        'dob' => 'Since',
         'experience' => 'Experience In Year',
         'status' => 'Status',
         'specialization' => ' Specialization',

@@ -548,10 +548,10 @@ class User extends Authenticatable implements HasMedia
 
     public static $rules = [
         'first_name' => 'required',
-        'last_name' => 'required',
+        // 'last_name' => 'required',
         'email' => 'required|email|unique:users,email|regex:/(.*)@(.*)\.(.*)/',
         'contact' => 'nullable|unique:users,contact',
-        'password' => 'required|same:password_confirmation|min:6',
+        // 'password' => 'required',
         'dob' => 'nullable|date',
         'experience' => 'nullable|numeric',
         'specializations' => 'required',
@@ -569,13 +569,13 @@ class User extends Authenticatable implements HasMedia
     protected $casts = [
         'email_verified_at' => 'datetime',
         'first_name' => 'string',
-        'last_name' => 'string',
+        // 'last_name' => 'string',
         'email' => 'string',
         'contact' => 'string',
         'dob' => 'string',
         'gender' => 'integer',
         'status' => 'boolean',
-        'password' => 'string',
+        // 'password' => 'string',
         'language' => 'string',
         'blood_group' => 'string',
         'type' => 'integer',

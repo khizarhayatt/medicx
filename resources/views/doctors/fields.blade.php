@@ -5,12 +5,12 @@
             {{ Form::text('first_name', null,['class' => 'form-control','placeholder' => __('messages.doctor.first_name'),'required']) }}
         </div>
     </div>
-    <div class="col-md-6">
+    <!-- <div class="col-md-6">
         <div class="mb-5">
             {{ Form::label('Last Name',__('messages.doctor.last_name').':' ,['class' => 'form-label required']) }}
             {{ Form::text('last_name', null,['class' => 'form-control','placeholder' => __('messages.doctor.last_name'),'required']) }}
         </div>
-    </div>
+    </div> -->
     <div class="col-md-6">
         <div class="mb-5">
             {{ Form::label('Email',__('messages.user.email').':' ,['class' => 'form-label required']) }}
@@ -26,30 +26,12 @@
             <span id="error-msg" class="text-danger d-none fw-400 fs-small mt-2">{{ __('messages.invalid_number') }}</span>
         </div>
     </div>
-    <div class="col-md-6 mb-5">
-        <div class="mb-1">
-            {{ Form::label('password',__('messages.staff.password').':' ,['class' => 'form-label required']) }}
-            <span data-bs-toggle="tooltip" title="{{ __('messages.flash.user_8_or') }}">
-                <i class="fa fa-question-circle"></i>
-            </span>
-            <div class="mb-3 position-relative">
-                {{Form::password('password',['class' => 'form-control','placeholder' => __('messages.staff.password'),'autocomplete' => 'off','required','aria-label'=>"Password",'data-toggle'=>"password"])}}
-                <span class="position-absolute d-flex align-items-center top-0 bottom-0 end-0 me-4 input-icon input-password-hide cursor-pointer text-gray-600"> <i class="bi bi-eye-slash-fill"></i> </span>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 mb-5">
-        <div class="mb-1">
-            {{ Form::label('Confirm Password',__('messages.user.confirm_password').':' ,['class' => 'form-label required']) }}
-            <span data-bs-toggle="tooltip" title="{{ __('messages.flash.user_8_or') }}">
-                <i class="fa fa-question-circle"></i>
-            </span>
-            <div class="mb-3 position-relative">
-                {{Form::password('password_confirmation',['class' => 'form-control','placeholder' => __('messages.user.confirm_password'),'autocomplete' => 'off','required','aria-label'=>"Password",'data-toggle'=>"password"])}}
-                <span class="position-absolute d-flex align-items-center top-0 bottom-0 end-0 me-4 input-icon input-password-hide cursor-pointer text-gray-600"> <i class="bi bi-eye-slash-fill"></i> </span>
-            </div>
-        </div>
-    </div>
+   
+
+    {{ Form::hidden('password', '1234', ['id' => 'password']) }}
+{{ Form::hidden('confirm_password', '1234', ['id' => 'confirm_password']) }}
+
+ 
     <div class="col-md-6">
         <div class="mb-5">
             {{ Form::label('DOB',__('messages.doctor.dob').':' ,['class' => 'form-label']) }}
@@ -84,10 +66,10 @@
             </span>
         </div>
     </div>
-    <div class="col-md-6 mb-5">
+    <!-- <div class="col-md-6 mb-5">
         <label class="form-label">{{ __('messages.patient.blood_group').':' }}</label>
         {{ Form::select('blood_group', $bloodGroup , null, ['class' => 'io-select2 form-select', 'data-control'=>"select2",'placeholder' => __('messages.patient.blood_group')]) }}
-    </div>
+    </div> -->
     <div class="col-md-6 mb-5">
         {{ Form::label('twitter',__('messages.doctor.twitter').':' ,['class' => 'form-label']) }}
         {{ Form::text('twitter_url', null,['class' => 'form-control','placeholder' => __('messages.common.twitter_url'), 'id' => 'twitterUrl']) }}
@@ -145,6 +127,19 @@
     <div class="col-md-6 mb-5">
         {{ Form::label('Country',__('messages.doctor.country').':' ,['class' => 'form-label']) }}
         {{ Form::select('country_id', $country, null,['class' => 'io-select2 form-select', 'data-control'=>"select2", 'id'=>'editDoctorCountryId','placeholder' => __('messages.doctor.country')]) }}
+    </div>
+
+    <div class="col-md-6">
+        <div class="mb-5">
+        {{ Form::label('longitude', __('Longitude') . ':', ['class' => 'form-label required']) }}
+        {{ Form::text('longitude', null, ['class' => 'form-control', 'placeholder' => __('Longitude'), 'required', 'aria-label' => "Longitude"]) }}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="mb-5">
+        {{ Form::label('latitude', __('Latitude') . ':', ['class' => 'form-label required']) }}
+        {{ Form::text('latitude', null, ['class' => 'form-control', 'placeholder' => __('Latitude'), 'required', 'aria-label' => "Latitude"]) }}
+        </div>
     </div>
     <div class="col-md-6 mb-5">
         {{ Form::label('State',__('messages.doctor.state').':' ,['class' => 'form-label']) }}

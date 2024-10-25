@@ -64,7 +64,7 @@ class Staff extends Model implements HasMedia
 
     public $fillable = [
         'first_name',
-        'last_name',
+        // 'last_name',
         'email',
         'phone_number',
         'password',
@@ -79,7 +79,7 @@ class Staff extends Model implements HasMedia
      */
     protected $casts = [
         'first_name' => 'string',
-        'last_name' => 'string',
+        // 'last_name' => 'string',
         'email' => 'string',
         'phone_number' => 'string',
         'password' => 'string',
@@ -94,7 +94,7 @@ class Staff extends Model implements HasMedia
      */
     public static $rules = [
         'first_name' => 'required',
-        'last_name' => 'required',
+        // 'last_name' => 'required',
         'email' => 'required|email|unique:users,email',
         'password' => 'required|same:password_confirmation|min:6',
         'contact' => 'nullable|unique:users,contact',

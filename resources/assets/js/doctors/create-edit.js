@@ -335,26 +335,26 @@ listenSubmit('#createDoctorForm', function () {
     let instagramExp = new RegExp(
         /^(https?:\/\/)?((m{1}\.)?)?((w{2,3}\.)?)instagram.[a-z]{2,3}\/?.*/i)
 
-    let twitterCheck = (twitterUrl == '' ? true : (twitterUrl.match(
-        twitterExp) ? true : false))
-    if (!twitterCheck) {
-        displayErrorMessage(Lang.get('js.valid_twitter'))
-        return false
-    }
+    // let twitterCheck = (twitterUrl == '' ? true : (twitterUrl.match(
+    //     twitterExp) ? true : false))
+    // if (!twitterCheck) {
+    //     displayErrorMessage(Lang.get('js.valid_twitter'))
+    //     return false
+    // }
 
-    let linkedInCheck = (linkedinUrl == '' ? true : (linkedinUrl.match(
-        linkedinExp) ? true : false))
-    if (!linkedInCheck) {
-        displayErrorMessage(Lang.get('js.valid_linkedin'))
-        return false
-    }
+    // let linkedInCheck = (linkedinUrl == '' ? true : (linkedinUrl.match(
+    //     linkedinExp) ? true : false))
+    // if (!linkedInCheck) {
+    //     displayErrorMessage(Lang.get('js.valid_linkedin'))
+    //     return false
+    // }
 
-    let instagramCheck = (instagramUrl == '' ? true : (instagramUrl.match(
-        instagramExp) ? true : false))
-    if (!instagramCheck) {
-        displayErrorMessage(Lang.get('js.valid_instagram'))
-        return false
-    }
+    // let instagramCheck = (instagramUrl == '' ? true : (instagramUrl.match(
+    //     instagramExp) ? true : false))
+    // if (!instagramCheck) {
+    //     displayErrorMessage(Lang.get('js.valid_instagram'))
+    //     return false
+    // }
 
     if ($('#error-msg').text() !== '') {
         $('#phoneNumber').focus()

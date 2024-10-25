@@ -43,7 +43,7 @@ class UserController extends AppBaseController
     /**
      * UserController constructor.
      */
-    public function __construct(UserRepository $userRepository)
+    public function __construct(userRepository $userRepository)
     {
         $this->userRepo = $userRepository;
     }
