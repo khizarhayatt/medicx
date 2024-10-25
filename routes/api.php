@@ -21,3 +21,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
  
 Route::get('/doctors/{doctor}', [UserController::class, 'showApi']);
+Route::get('/doctors', [UserController::class, 'indexApi']);

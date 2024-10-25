@@ -68,6 +68,32 @@ class UserController extends AppBaseController
         return view('doctors.index', compact('years', 'status'));
     }
 
+    public function indexApi(Request $request) 
+    {
+            // Fetch paginated doctor data, assuming 10 per page by default
+        $doctors = Doctor::paginate(10);
+
+        // Map each doctor to include their details
+        $doctorsData = $doctors->map(function ($doctor) {
+            return $this->userRepo->doctorDetail($doctor);
+        });
+
+        // Return paginated doctor details as JSON response
+        return response()->json([
+            'success' => true,
+            'data' => $doctorsData,
+            'pagination' => [
+                'total' => $doctors->total(),
+                'per_page' => $doctors->perPage(),
+                'current_page' => $doctors->currentPage(),
+                'last_page' => $doctors->lastPage(),
+                'from' => $doctors->firstItem(),
+                'to' => $doctors->lastItem(),
+            ]
+        ], 200);
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
