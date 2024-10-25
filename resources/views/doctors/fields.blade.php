@@ -50,22 +50,7 @@
             {{ Form::text('experience', null,['class' => 'form-control','onkeyup' => 'if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,"")','placeholder' => __('messages.doctor.experience'),'step'=>'any']) }}
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="mb-5">
-            <label class="form-label required">
-                {{__('messages.doctor.select_gender')}}
-                :
-            </label>
-            <span class="is-valid">
-                <div class="mt-2">
-                    <input class="form-check-input" type="radio" checked name="gender" value="1">
-                    <label class="form-label mr-3">{{__('messages.doctor.male')}}</label>
-                    <input class="form-check-input ms-2" type="radio" name="gender" value="2">
-                    <label class="form-label mr-3">{{__('messages.doctor.female')}}</label>
-                </div>
-            </span>
-        </div>
-    </div>
+    
     <!-- <div class="col-md-6 mb-5">
         <label class="form-label">{{ __('messages.patient.blood_group').':' }}</label>
         {{ Form::select('blood_group', $bloodGroup , null, ['class' => 'io-select2 form-select', 'data-control'=>"select2",'placeholder' => __('messages.patient.blood_group')]) }}

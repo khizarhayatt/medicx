@@ -3,10 +3,7 @@
         {{ Form::label('First Name',__('messages.doctor.first_name').':' ,['class' => 'form-label required']) }}
         {{ Form::text('first_name', $user->first_name,['class' => 'form-control','placeholder' => __('messages.doctor.first_name'),'required']) }}
     </div>
-    <div class="col-md-6 mb-5">
-        {{ Form::label('Last Name',__('messages.doctor.last_name').':' ,['class' => 'form-label required']) }}
-        {{ Form::text('last_name', $user->last_name,['class' => 'form-control','placeholder' => __('messages.doctor.last_name'),'required']) }}
-    </div>
+   
     <div class="col-md-6 mb-5">
         {{ Form::label('Email',__('messages.user.email').':' ,['class' => 'form-label required']) }}
         {{ Form::email('email', $user->email,['class' => 'form-control','placeholder' =>  __('messages.web.email')]) }}
@@ -30,24 +27,8 @@
         {{ Form::label('Experience', __('messages.doctor.experience').':', ['class' => 'form-label']) }}
         {{ Form::text('experience', $doctor->experience, ['class' => 'form-control', 'placeholder' => __('messages.doctor.experience'),'step'=>'any']) }}
     </div>
-    <div class="col-md-6 mb-5">
-        <label class="form-label required">
-            {{__('messages.doctor.select_gender')}}
-            :
-        </label>
-        <span class="is-valid">
-                <div class="mt-2">
-                    <input class="form-check-input" type="radio" name="gender" value="1" {{ !empty($user->gender) && $user->gender === 1 ? 'checked' : '' }}>
-                    <label class="form-label mr-3">{{__('messages.doctor.male')}}</label>
-                    <input class="form-check-input ms-2" type="radio" name="gender" value="2" {{ !empty($user->gender) && $user->gender === 2 ? 'checked' : ''}}>
-                    <label class="form-label mr-3">{{__('messages.doctor.female')}}</label>
-                </div>
-            </span>
-    </div>
-    <div class="col-md-6 mb-5">
-        <label class="form-label">{{ __('messages.patient.blood_group').':' }}</label>
-        {{ Form::select('blood_group', $bloodGroup , $user->blood_group, ['class' => 'io-select2 form-select', 'data-control'=>"select2",'placeholder' => __('messages.doctor.select_blood_group')]) }}
-    </div>
+    
+     
     <div class="col-md-6 mb-5">
         {{ Form::label('twitter',__('messages.doctor.twitter').':' ,['class' => 'form-label']) }}
         {{ Form::text('twitter_url', !empty($doctor->twitter_url) ? $doctor->twitter_url : null,['class' => 'form-control','placeholder' =>  __('messages.common.twitter_url'),'id' => 'twitterUrl']) }}
@@ -60,6 +41,23 @@
         {{ Form::label('instagram',__('messages.doctor.instagram').':' ,['class' => 'form-label']) }}
         {{ Form::text('instagram_url', !empty($doctor->instagram_url) ? $doctor->instagram_url : null,['class' => 'form-control','placeholder' =>  __('messages.common.instagram_url'), 'id' => 'instagramUrl']) }}
     </div>
+
+    <div class="col-md-6">
+    <div class="mb-5">
+        {{ Form::label('longitude', __('Longitude') . ':', ['class' => 'form-label required']) }}
+        {{ Form::text('longitude', !empty($doctor->longitude) ? $doctor->longitude : null, ['class' => 'form-control', 'placeholder' => __('Longitude'), 'required', 'aria-label' => 'Longitude']) }}
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="mb-5">
+        {{ Form::label('latitude', __('Latitude') . ':', ['class' => 'form-label required']) }}
+        {{ Form::text('latitude', !empty($doctor->latitude) ? $doctor->latitude : null, ['class' => 'form-control', 'placeholder' => __('Latitude'), 'required', 'aria-label' => 'Latitude']) }}
+    </div>
+</div>
+
+
+
+
     <div class="col-md-6 mb-5">
         <div class="mb-3" io-image-input="true">
             <label for="exampleInputImage" class="form-label">{{__('messages.doctor.profile')}}:</label>

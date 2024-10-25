@@ -33,7 +33,7 @@ class UserRepository extends BaseRepository
         'dob',
         'specialization',
         'experience',
-        'gender',
+        // 'gender',
         'status',
         // 'password',
          

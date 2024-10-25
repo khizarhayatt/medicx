@@ -31,7 +31,9 @@
                                     <img src="{{ $doctorDetailData['data']->user->profile_image }}" alt="user">
                                 </div>
                                 <div class="ms-0 ms-md-10 mt-5 mt-sm-0  ">
-                                    <span class="text-success mb-2 d-block">{{ $doctorDetailData['data']->user->role_name }}</span>
+                                    <span class="text-success mb-2 d-block">
+                                    <!-- {{  $doctorDetailData['data']->user->role_name                                     }} -->
+                                     Clinic</span>
                                     <h2>{{ $doctorDetailData['data']->user->full_name }}</h2>
                                     <a href="mailto:{{ $doctorDetailData['data']->user->email }}"
                                        class="text-gray-600 text-decoration-none fs-4">

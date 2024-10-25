@@ -116,6 +116,20 @@ class UserController extends AppBaseController
         return view('doctors.show', compact('doctor', 'doctorDetailData'));
     }
 
+    public function showApi(Doctor $doctor)
+    {
+          
+        // Fetch doctor details
+        $doctorDetailData = $this->userRepo->doctorDetail($doctor);
+        
+        // Return doctor details as JSON response
+        return response()->json([
+            'success' => true, 
+            'doctorDetailData' => $doctorDetailData
+        ], 200);
+    }
+
+
     /**
      * Show the form for editing the specified resource.
      *

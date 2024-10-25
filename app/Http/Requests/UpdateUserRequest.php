@@ -27,7 +27,7 @@ class UpdateUserRequest extends FormRequest
             'dob' => 'nullable|date',
             'experience' => 'nullable|numeric',
             'specializations' => 'required',
-            'gender' => 'required',
+            // 'gender' => 'required',
             'status' => 'nullable',
             'postal_code' => 'nullable',
             'profile' => 'mimes:jpeg,jpg,png|max:2000',
