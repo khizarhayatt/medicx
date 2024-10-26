@@ -1,5 +1,4 @@
-menu.blade.php
-@php $styleCss = 'style' @endphp
+ @php $styleCss = 'style' @endphp
 <div class="no-record text-center d-none">{{ __('messages.no_matching_records_found') }}</div>
 
 @can('manage_admin_dashboard')

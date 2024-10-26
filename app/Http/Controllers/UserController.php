@@ -69,11 +69,9 @@ class UserController extends AppBaseController
     }
 
     public function indexApi(Request $request) 
-    {
-            // Fetch paginated doctor data, assuming 10 per page by default
+    { 
         $doctors = Doctor::paginate(10);
-
-        // Map each doctor to include their details
+ 
         $doctorsData = $doctors->map(function ($doctor) {
             return $this->userRepo->doctorDetail($doctor);
         });
@@ -81,7 +79,7 @@ class UserController extends AppBaseController
         // Return paginated doctor details as JSON response
         return response()->json([
             'success' => true,
-            'data' => $doctorsData,
+            'clinics' => $doctorsData,
             'pagination' => [
                 'total' => $doctors->total(),
                 'per_page' => $doctors->perPage(),

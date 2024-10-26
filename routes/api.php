@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DoctorSessionController;
+use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,3 +24,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
  
 Route::get('/doctors/{doctor}', [UserController::class, 'showApi']);
 Route::get('/doctors', [UserController::class, 'indexApi']);
+Route::get('/appointment-data', [FrontController::class, 'getMedicalAppointmentDataApi']);
+Route::get('/get-slots', [DoctorSessionController::class, 'getSlotByGapApi']);
+Route::get('/slots', [DoctorSessionController::class, 'getDoctorSessionApi']);

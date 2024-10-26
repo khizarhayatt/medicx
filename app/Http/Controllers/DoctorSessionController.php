@@ -242,6 +242,92 @@ class DoctorSessionController extends AppBaseController
 
         return $this->sendResponse($slots, __('messages.flash.retrieve'));
     }
+ 
+    public function getDoctorSessionApi(Request $request): JsonResponse
+    {
+        $holidayDate = $request->input('date');
+        $doctorId = $request->input('adminAppointmentDoctorId');
+        $timezoneOffsetMinutes = $request->input('timezone_offset_minutes');
+
+        // Check if the doctor is on holiday
+        $doctorHoliday = DoctorHoliday::where('doctor_id', $doctorId)
+            ->where('date', $holidayDate)
+            ->exists();
+        if ($doctorHoliday) {
+            return response()->json(['error' => 'holiday'], 404);
+        }
+
+        // Validate timezone offset
+        if (!is_numeric($timezoneOffsetMinutes) || $timezoneOffsetMinutes < -720 || $timezoneOffsetMinutes > 840) {
+            return response()->json(['error' => 'Invalid timezone offset provided. Valid range is -720 to 840 minutes.'], 400);
+        }
+
+        // Timezone Conversion
+        $timezoneName = timezone_name_from_abbr('', $timezoneOffsetMinutes * 60, false);
+        if ($timezoneName === false) {
+            return response()->json(['error' => 'Unable to determine timezone name from offset.'], 400);
+        }
+
+        $date = Carbon::createFromFormat('Y-m-d', $holidayDate);
+        if (!$date) {
+            return response()->json(['error' => 'Invalid date format provided.'], 400);
+        }
+
+        // Retrieve Doctor's Weekday Sessions
+        $doctorWeekDaySessions = WeekDay::where('day_of_week', $date->dayOfWeek)
+            ->where('doctor_id', $doctorId)
+            ->with('doctorSession')
+            ->get();
+
+        // Check if there are any sessions available
+        if ($doctorWeekDaySessions->isEmpty()) {
+            return response()->json(['error' => 'No available sessions for this doctor on the selected day.'], 404);
+        }
+
+        // Get Booked Appointments for Doctor
+        $appointments = Appointment::where('doctor_id', $doctorId)
+            ->whereIn('status', [Appointment::BOOKED, Appointment::CHECK_IN, Appointment::CHECK_OUT])
+            ->whereDate('date', $holidayDate)
+            ->get();
+
+        $bookedSlots = $appointments->map(function ($appointment) {
+            return $appointment->from_time . ' ' . $appointment->from_time_type . ' - ' . $appointment->to_time . ' ' . $appointment->to_time_type;
+        })->toArray();
+
+        $bookingSlots = [];
+        foreach ($doctorWeekDaySessions as $doctorWeekDaySession) {
+            date_default_timezone_set($timezoneName);
+            $doctorSession = $doctorWeekDaySession->doctorSession;
+            $startTime = date('H:i', strtotime($doctorWeekDaySession->full_start_time));
+            $endTime = date('H:i', strtotime($doctorWeekDaySession->full_end_time));
+            $sessionMeetingTime = $doctorSession->session_meeting_time;
+            $gap = $doctorSession->session_gap;
+
+            $isSameWeekDay = (Carbon::now()->dayOfWeek == $date->dayOfWeek) && (Carbon::now()->isSameDay($date));
+            $slots = $this->getTimeSlot($sessionMeetingTime, $startTime, $endTime);
+
+            foreach ($slots as $index => $slot) {
+                $slotStartTime = date('h:i A', strtotime('+' . ($gap * ($index - 1)) . ' minutes', strtotime($slot[0])));
+                $slotEndTime = date('h:i A', strtotime('+' . ($gap * ($index - 1)) . ' minutes', strtotime($slot[1])));
+
+                if (($isSameWeekDay && strtotime($slotStartTime) > strtotime(date('h:i A'))) || !$isSameWeekDay) {
+                    if (!in_array($slotStartTime . ' - ' . $slotEndTime, $bookingSlots)) {
+                        $bookingSlots[] = $slotStartTime . ' - ' . $slotEndTime;
+                    }
+                }
+            }
+        }
+
+        return response()->json([
+            'data' => [
+                'bookedSlot' => $bookedSlots ?: null,
+                'slots' => $bookingSlots
+            ],
+            'message' => __('messages.flash.retrieve')
+        ], 200);
+    }
+
+
 
     /**
      * @throws Exception
@@ -292,6 +378,18 @@ class DoctorSessionController extends AppBaseController
         $html = view('doctor_sessions.slot', ['slots' => $slots, 'day' => $day])->render();
 
         return $this->sendResponse($html, __('messages.flash.retrieve'));
+    }
+    public function getSlotByGapApi(Request $request)
+    {
+        $gap = $request->get('gap');
+        $day = $request->get('day');
+        $clinicSchedule = ClinicSchedule::whereDayOfWeek($day)->first();
+        $slots = getSlotByGap($clinicSchedule->start_time, $clinicSchedule->end_time);
+        $html = view('doctor_sessions.slot', ['slots' => $slots, 'day' => $day])->render();
+
+        return response()->json([
+            'slots'=> $slots,
+        ]);
     }
 
     /**

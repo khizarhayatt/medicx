@@ -88,11 +88,29 @@ class FrontController extends AppBaseController
     {
         $faqs = Faq::latest()->get();
 
-        $appointmentDoctors = Doctor::with('user')->whereIn('id',
-            DoctorSession::pluck('doctor_id')->toArray())->get()->where('user.status',
-                User::ACTIVE)->pluck('user.full_name', 'id');
+        $appointmentDoctors = Doctor::with(['user' => function($query) {
+            $query->where('status', User::ACTIVE);
+        }])
+        ->whereIn('id', DoctorSession::pluck('doctor_id')->toArray())
+        ->get()
+        ->pluck('user.full_name', 'id');
 
         return view('fronts.medical_appointment', compact('faqs', 'appointmentDoctors'));
+    }
+
+    public function getMedicalAppointmentDataApi(Request $request)
+    {  
+        // Get appointment doctors with active status
+        $appointmentDoctors = Doctor::with('user')
+            ->whereIn('id', DoctorSession::pluck('doctor_id')->toArray())
+            ->get()
+            ->where('user.status', User::ACTIVE)
+            ->pluck('user.full_name', 'id');
+
+        // Return JSON response
+        return response()->json([ 
+            'appointmentDoctors' => $appointmentDoctors,
+        ]);
     }
 
     /**
